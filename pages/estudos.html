@@ -1,0 +1,27 @@
+<%- include('partials/header.html') %>
+
+
+        <div class="ultimas-esudos">
+            <div id="main-container" class="container-fluid">
+                <div class="col-md-12">
+                    <div class="row" id="auth-row">
+                        <% for (let i = 0; i < estudos.length; i++) { %>
+                        <div class="estudo">
+                            <img src="<%= estudos[i].image %>" />
+                            <div class="conteudo-estudo">
+                                <h2><%= estudos[i].titulo %></h2>
+                                <p><%- estudos[i].conteudoCurto %></p>
+                                <a href="<%= estudos[i].slug %>">Assistir...</a>
+                            </div>
+                        </div>
+                        <% } %>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+<%- include('partials/footer.html') %>
+
+</body>
+</html>

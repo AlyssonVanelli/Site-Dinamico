@@ -1,0 +1,23 @@
+<section class="outras-noticias vejamaiscards">
+    <div class="title-outras-noticia vejamaiscards">
+        <div class='vejamaiscards'>
+            <div style="width:100%;" class="mais-lidas vejamaiscards">
+                <div class="mais-lidas-noticias">
+                    <% for(let i = 0; i < ultimas.length; i++) { %>
+                    <div class="veja-mais-single">
+                        <img src="<%= ultimas[i].image %>" />
+                        <div class="texto-mais-lida-single">
+                            <h4><%= ultimas[i].titulo %></h4>
+                            <p><%- ultimas[i].conteudoCurto %>...</p>
+                            <a href="<%= ultimas[i].slug %>">Saiba mais</a>
+                        </div>
+                    </div>
+                    <% } %>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+</body>
+</html>

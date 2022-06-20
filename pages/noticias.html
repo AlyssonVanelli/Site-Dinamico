@@ -1,0 +1,22 @@
+<%- include('partials/header.html') %>
+
+<section class="outras-noticias">
+    <div class="title-outras-noticia">
+            <div class="ultimas">
+                <% for (let i = 0; i < noticias.length; i++) { %>
+                <div class="box-ultima-single">
+                    <img src="<%= noticias[i].image %>" />
+                    <div class="conteudo-noticia-single">
+                        <h2><%= noticias[i].titulo %></h2>
+                        <p>Categoria: <%= noticias[i].categoria %></p>
+                        <p><%- noticias[i].conteudoCurto %></p>
+                        <a href="<%= noticias[i].slug %>">Continue Lendo...</a>
+                    </div>
+                </div>
+                <% } %>
+            </div>
+        </div>
+    </div>
+</section>
+
+<%- include('partials/footer.html') %>
