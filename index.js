@@ -2,7 +2,7 @@ const express = require('express');
 var bodyParser = require('body-parser')
 const mongoose = require('mongoose');
 var session = require('express-session');
-const fileupload = require('express-fileupload');
+const multer = require('multer');
 
 const path = require('path');
 
@@ -12,6 +12,20 @@ const Destaques = require('./models/Destaques.js')
 const Posts = require('./models/Posts.js')
 const Estudos = require('./models/Estudos.js')
 const Noticias = require('./models/Noticias.js')
+
+
+const storage = multer.diskStorage({
+    destination:function(req,file,cb){
+        cb(null,'./public/images') 
+    },
+    filename:function(req,file,cb){
+        cb(null,Date.now()+".jpg") 
+    }
+})
+
+const upload = multer({
+    storage:storage
+})
 
 mongoose.connect('mongodb+srv://root:gJHaNhSGnj32vYwy@cluster0.jxqoy.mongodb.net/AhavatChessed?retryWrites=true&w=majority',{useNewUrlParser: true, useUnifiedTopology: true}).then(function(){
     console.log('Conectado ao mongo')
@@ -176,6 +190,10 @@ app.get('/estudos',(req,res)=>{
     })
 })
 
+app.get('/faleconosco',(req,res)=>{
+    res.render('faleConosco');
+})
+
 var usuarios = [
     {
         email: 'Admin@hotmail.com',
@@ -204,6 +222,14 @@ app.get('/admin',(req,res)=>{
                 }
             })
 
+        Noticias.find({}).sort({'_id': -1}).exec(function(err,noticias){
+            noticias = noticias.map(function(val){
+                return {
+                    id: val._id,
+                    titulo: val.titulo,
+                }
+            })
+
         Destaques.find({}).sort({'_id': -1}).exec(function(err,destaques){
             destaques = destaques.map(function(val){
                 return {
@@ -220,19 +246,20 @@ app.get('/admin',(req,res)=>{
                 }
             })
 
-            res.render('admin-painel', {posts:posts,destaques:destaques,estudos:estudos})
+            res.render('admin-painel', {posts:posts,destaques:destaques,estudos:estudos,noticias:noticias})
 
         })
     })
+})
 })
 
     }
 })
 
-app.post('/admin/destaque', (req,res)=>{
+app.post('/admin/destaque',upload.single("image_destaque"), (req,res)=>{
     Destaques.create({
         titulo:req.body.titulo_destaque,
-        //image:req.body.image_destaque,
+        image:req.file.filename,
         categoria:req.body.categoria_destaque,
         conteudo:req.body.conteudo_destaque,
         slug:req.body.slug_destaque,
@@ -240,25 +267,161 @@ app.post('/admin/destaque', (req,res)=>{
     res.redirect('/admin')
 })
 
-app.post('/admin/noticia', (req,res)=>{
+app.get('/admin/destaque/:id',upload.single("image_destaque"), (req,res)=>{
+    Destaques.findOneAndUpdate({id: req.params._id},{new:true},function(err,resposta){
+
+        if(resposta != null){
+            res.render('editDestaques',{destaque:resposta});
+        }else{
+            res.redirect('/')
+        }
+
+    })
+})
+
+app.post('/admin/destaques/atualizar/:id',upload.single("image_destaque"), async (req, res)=>{
+    try {
+        const id = req.params.id;
+        const updates = {
+            id:req.params.id,
+            titulo:req.body.titulo_destaque,
+            image:req.file.filename,
+            categoria:req.body.categoria_destaque,
+            conteudo:req.body.conteudo_destaque,
+            slug:req.body.slug_destaque
+        };
+        const options = {new:true} ;
+        const result = await Destaques.findByIdAndUpdate(id,updates, options);
+        res.redirect('/admin')
+    } catch (error) {
+        console.log(error.message)
+    }
+})
+
+app.post('/admin/posts',upload.single("image_post"), (req,res)=>{
     Posts.create({
+        titulo:req.body.titulo_post,
+        image:req.file.filename,
+        categoria:req.body.categoria_post,
+        conteudo:req.body.conteudo_post,
+        slug:req.body.slug_post,
+    })
+    res.redirect('/admin')
+})
+
+app.get('/admin/posts/:id',upload.single("image_post"), (req,res)=>{
+    Posts.findOneAndUpdate({id: req.params._id},{new:true},function(err,resposta){
+
+        if(resposta != null){
+            res.render('editPost',{posts:resposta});
+        }else{
+            res.redirect('/')
+        }
+
+    })
+})
+
+app.post('/admin/posts/atualizar/:id',upload.single("image_post"), async (req, res)=>{
+    try {
+        const id = req.params.id;
+        const updates = {
+            id:req.params.id,
+            titulo:req.body.titulo_post,
+            image:req.file.filename,
+            categoria:req.body.categoria_post,
+            conteudo:req.body.conteudo_post,
+            slug:req.body.slug_post
+        };
+        const options = {new:true} ;
+        const result = await Posts.findByIdAndUpdate(id,updates, options);
+        res.redirect('/admin')
+    } catch (error) {
+        console.log(error.message)
+    }
+})
+
+app.post('/admin/noticia',upload.single("image_noticia"), (req,res)=>{
+    Noticias.create({
         titulo:req.body.titulo_noticia,
-        //image:req.body.image_noticia,
+        image:req.file.filename,
         categoria:req.body.categoria_noticia,
         conteudo:req.body.conteudo_noticia,
         slug:req.body.slug_noticia,
     })
-    res.redirect('/admin')})
+    res.redirect('/admin')
+})
 
-app.post('/admin/estudo', (req,res)=>{
+app.get('/admin/noticia/:id',upload.single("image_noticia"), (req,res)=>{
+    Noticias.findOneAndUpdate({id: req.params._id},{new:true},function(err,resposta){
+
+        if(resposta != null){
+            res.render('editNoticia',{noticias:resposta});
+        }else{
+            res.redirect('/')
+        }
+
+    })
+})
+
+app.post('/admin/noticia/atualizar/:id',upload.single("image_noticia"), async (req, res)=>{
+    try {
+        const id = req.params.id;
+        const updates = {
+            id:req.params.id,
+            titulo:req.body.titulo_noticia,
+            image:req.file.filename,
+            categoria:req.body.categoria_noticia,
+            conteudo:req.body.conteudo_noticia,
+            slug:req.body.slug_noticia
+        };
+        const options = {new:true} ;
+        const result = await Noticias.findByIdAndUpdate(id,updates, options);
+        res.redirect('/admin')
+    } catch (error) {
+        console.log(error.message)
+    }
+})
+
+app.post('/admin/estudo',upload.single("image_estudo"), (req,res)=>{
     Estudos.create({
         titulo:req.body.titulo_estudo,
-        //image:req.body.image_estudo,
+        image:req.file.filename,
         categoria:req.body.categoria_estudo,
         conteudo:req.body.conteudo_estudo,
         slug:req.body.slug_estudo,
     })
     res.redirect('/admin')
+})
+
+app.get('/admin/estudo/:id',upload.single("image_estudo"), (req,res)=>{
+    Estudos.findOneAndUpdate({id: req.params._id},{new:true},function(err,resposta){
+
+        if(resposta != null){
+            res.render('editEstudo',{estudos:resposta});
+        }else{
+            res.redirect('/')
+        }
+
+    })
+})
+
+app.post('/admin/estudo/atualizar/:id',upload.single("image_estudo"), async (req, res)=>{
+    try {
+        const id = req.params.id;
+        const updates = {
+            id:req.params.id,
+            titulo:req.body.titulo_estudo,
+            image:req.file.filename,
+            categoria:req.body.categoria_estudo,
+            conteudo:req.body.conteudo_estudo,
+            slug:req.body.slug_estudo
+        };
+        const options = {new:true} ;
+        const result = await Estudos.findByIdAndUpdate(id,updates, options);
+        res.redirect('/admin')
+    } catch (error) {
+        console.log(error.message)
+    }
 })
 
 app.get('/admin/deletar/destaques/:id', (req, res)=>{
@@ -273,13 +436,17 @@ app.get('/admin/deletar/posts/:id', (req, res)=>{
     })
 })
 
+app.get('/admin/deletar/noticias/:id', (req, res)=>{
+    Noticias.deleteOne({_id:req.params.id}).then(function(){
+        res.redirect('/admin')
+    })
+})
 
 app.get('/admin/deletar/estudos/:id', (req, res)=>{
     Estudos.deleteOne({_id:req.params.id}).then(function(){
         res.redirect('/admin')
     })
 })
-
 
 app.get('/:slug',(req,res)=>{
     Posts.findOneAndUpdate({slug: req.params.slug},{new:true},function(err,resposta){

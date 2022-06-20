@@ -7,7 +7,7 @@
                 <div class="item active">
                     <h2><%= destaques[0].titulo %></h2>
                     <p><%= destaques[0].conteudoCurto %></p>
-                    <img src="<%= destaques[0].image %>">
+                    <img src="http://localhost:5000/public/images/<%= destaques[0].image %>">
                 </div>
             </div>
         </div>
@@ -33,7 +33,7 @@
                     <h2>POSTAGENS</h2>
                     <% for (let i = 0; i < posts.length; i++) { %>
                     <div class="box-ultima-single">
-                        <img src="<%= posts[i].image %>" />
+                        <img src="http://localhost:5000/public/images/<%= posts[i].image %>" />
                         <div class="conteudo-noticia-single">
                             <h2><%= posts[i].titulo %></h2>
                             <p>Categoria: <%= posts[i].categoria %></p>
@@ -42,10 +42,13 @@
                         </div>
                     </div>
                     <% } %>
-                    <h2>NOTICIAS</h2>
+                    <div class="vejamaisbutton">
+                        <a href="/postagens">Veja Mais</a>
+                    </div>
+                    <h2 style="margin-top: 50px">NOTICIAS</h2>
                     <% for (let i = 0; i < noticias.length; i++) { %>
                     <div class="box-ultima-single">
-                        <img src="<%= noticias[i].image %>" />
+                        <img src="http://localhost:5000/public/images/<%= noticias[i].image %>" />
                         <div class="conteudo-noticia-single">
                             <h2><%= noticias[i].titulo %></h2>
                             <p>Categoria: <%= noticias[i].categoria %></p>
@@ -54,6 +57,9 @@
                         </div>
                     </div>
                     <% } %>
+                    <div class="vejamaisbutton">
+                        <a href="/noticias">Veja Mais</a>
+                    </div>
                 </div>
             </div>
         </div>

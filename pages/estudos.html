@@ -7,7 +7,7 @@
                     <div class="row" id="auth-row">
                         <% for (let i = 0; i < estudos.length; i++) { %>
                         <div class="estudo">
-                            <img src="<%= estudos[i].image %>" />
+                            <img src="http://localhost:5000/public/images/<%= estudos[i].image %>" />
                             <div class="conteudo-estudo">
                                 <h2><%= estudos[i].titulo %></h2>
                                 <p><%- estudos[i].conteudoCurto %></p>

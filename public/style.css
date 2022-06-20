@@ -515,6 +515,7 @@ section.outras-noticias{
     text-align: center;
     margin: 0;
     padding: 20px;
+    margin-top: 50px;
   }
   
   #social-container ul,
@@ -756,4 +757,90 @@ section.outras-noticias{
   border-bottom: 10px solid #9FE7E7;
   padding-top: 20px;
   margin-bottom: 20px;
+}
+
+.editar{
+  width: 350px;
+  border-bottom: 10px solid #9FE7E7;
+}
+
+.vejamaisbutton{
+  display: flex;
+  margin: 0 auto;
+  background-color: black
+}
+
+.vejamaisbutton a{
+  text-decoration: none;
+  text-align: center;
+  justify-content: center;
+  background-color: #031d30;
+  text-decoration: none;
+  color:#0AACDC;
+  line-height: 40px;
+  font-size: 19px;
+  padding:20px;
+}
+
+.box-ultima-completas{
+  margin-top: 20px;
+  margin-bottom: 20px;
+  text-align: center;
+  width:19%;
+  margin-right: 3%;
+  margin-left: 3%;
+  padding: 0px;
+  background-color: #ffffff;
+  box-shadow: 0px 1px 3px #686868;
+}
+
+.box-ultima-completas h2{
+  font-weight: bold;
+  font-size: 20px;
+  margin-top: 0px;
+}
+
+.box-ultima-completas p{
+  color: black;
+}
+
+.box-ultima-completas img{
+    width:100%;
+}
+
+.box-ultima-completas a{
+  display: block;
+  background-color: #031d30;
+  text-decoration: none;
+  color:#0AACDC;
+  line-height: 56px;
+  font-size: 19px;
+}
+
+.completas{
+  padding:0 10px;
+  display: flex;
+  height:100%;
+  flex-wrap: wrap;
+}
+
+.completas > h2{
+  background-color: #031d30;
+  font-weight: bold;
+  color:white;
+  text-align: center;
+  padding:10px 0;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  width: 100%;
+  font-size: 30px !important;
+}
+
+.completas h1{
+  background-color: #031d30;
+  color:white;
+  text-align: center;
+  padding:10px 8px;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
 }

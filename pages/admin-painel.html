@@ -2,8 +2,11 @@
 
 <div id="main-container" class="container-fluid">
     <div class="col-md-12">
-        <div class="row" id="auth-row">
-            <div class="col-md-4" id="destaque-container">
+        <div style="margin: 0 auto;text-align:center;justify-content:center" class="row">
+            <h1 style="text-align: center; margin-bottom: 50px; margin-top: 50px" class="editar">Adicionar dados</h1>
+        </div>
+        <div style="margin-top: 20px" class="row" id="auth-row">
+            <div class="col-md-3" id="destaque-container">
                 <h2>Novo Destaque</h2>
                 <form enctype="multipart/form-data" method="POST" action="/admin/destaque">
                     <div class="form-group">
@@ -29,7 +32,33 @@
                     <input type="submit" class="btn card-btn" value="Adicionar destaque" name="acao">
                 </form>
             </div>
-            <div class="col-md-4" id="noticia-container">
+            <div class="col-md-3" id="estudo-container">
+                <h2>Novo Post</h2>
+                <form enctype="multipart/form-data" method="POST"  action="/admin/posts">
+                    <div class="form-group">
+                        <label for="title">Título:</label>
+                        <input type="text" class="form-control" id="title" name="titulo_post" placeholder="Digite o título do post">
+                    </div>
+                    <div class="form-group">
+                        <label for="image">Imagem:</label>
+                        <input type="file" class="form-control-file" name="image_post" id="image_post">
+                    </div>
+                    <div class="form-group">
+                        <label for="description">Descrição:</label>
+                        <textarea name="conteudo_post" id="description" rows="5" class="form-control" placeholder="Descreva o post..."></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="title">Categoria:</label>
+                        <input type="text" class="form-control" id="category" name="categoria_post" placeholder="Digite a categoria do post">
+                    </div>
+                    <div class="form-group">
+                        <label for="title">Slug:</label>
+                        <input type="text" class="form-control" id="slug" name="slug_post" placeholder="Digite o slug do post">
+                    </div>
+                    <input type="submit" class="btn card-btn" value="Adicionar post">
+                </form>
+            </div>
+            <div class="col-md-3" id="noticia-container">
                 <h2>Nova Noticia</h2>
                 <form enctype="multipart/form-data" method="POST" action="/admin/noticia">
                     <div class="form-group">
@@ -55,7 +84,7 @@
                     <input type="submit" class="btn card-btn" value="Adicionar noticia" >
                 </form>
             </div>
-            <div class="col-md-4" id="estudo-container">
+            <div class="col-md-3" id="estudo-container">
                 <h2>Novo Estudo</h2>
                 <form enctype="multipart/form-data" method="POST"  action="/admin/estudo">
                     <div class="form-group">
@@ -87,33 +116,25 @@
 
 <div id="main-container" class="container-fluid">
     <div class="col-md-12">
+        <div style="margin: 0 auto;text-align:center;justify-content:center" class="row">
+            <h1 style="text-align: center; margin-bottom: 50px; margin-top: 50px" class="editar">Editar dados</h1>
+        </div>
         <div class="row" id="auth-row">
-            <div class="col-md-4">
+            <div class="col-md-3">
                 <h2>Destaques</h2>
-                <div id="destaque-delete">
-                    <% for (let i = 0; i < destaques.length; i++) { %>
-                    <p>Titulo: <%= destaques[i].titulo %></p>
-                    <a href="/admin/deletar/destaques/<%= destaques[i].id %>">(x)</a>
-                    <% } %>
-                </div>
+                <%- include('listaDestaques.html') %>
             </div>
-            <div class="col-md-4">
-                <h2>Noticias</h2>
-                <div id="noticia-delete">
-                    <% for (let i = 0; i < posts.length; i++) { %>
-                    <p>Titulo: <%= posts[i].titulo %></p>
-                    <a href="/admin/deletar/posts/<%= posts[i].id %>">(x)</a>
-                    <% } %>
-                </div>
+            <div class="col-md-3">
+                <h2>Posts</h2>
+                <%- include('listaPosts.html') %>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-3">
+                <h2>Noticia</h2>
+                <%- include('listaNoticias.html') %>
+            </div>
+            <div class="col-md-3">
                 <h2>Estudos</h2>
-                <div id="estudo-delete">              
-                    <% for (let i = 0; i < estudos.length; i++) { %>
-                    <p>Titulo: <%= estudos[i].titulo %></p>
-                    <a href="/admin/deletar/estudos/<%= estudos[i].id %>">(x)</a>
-                    <% } %>
-                </div>
+                <%- include('listaEstudos.html') %>
             </div>
         </div>
     </div>
