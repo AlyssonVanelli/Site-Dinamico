@@ -1,8 +1,9 @@
 const express = require('express');
 var bodyParser = require('body-parser')
-const mongoose = require('mongoose');
 var session = require('express-session');
 const multer = require('multer');
+require ('./config/db')
+require('dotenv').config();
 
 const path = require('path');
 
@@ -12,7 +13,7 @@ const Destaques = require('./models/Destaques.js')
 const Posts = require('./models/Posts.js')
 const Estudos = require('./models/Estudos.js')
 const Noticias = require('./models/Noticias.js')
-
+const Horarios = require('./models/Horarios.js')
 
 const storage = multer.diskStorage({
     destination:function(req,file,cb){
@@ -25,12 +26,6 @@ const storage = multer.diskStorage({
 
 const upload = multer({
     storage:storage
-})
-
-mongoose.connect('mongodb+srv://root:gJHaNhSGnj32vYwy@cluster0.jxqoy.mongodb.net/AhavatChessed?retryWrites=true&w=majority',{useNewUrlParser: true, useUnifiedTopology: true}).then(function(){
-    console.log('Conectado ao mongo')
-}).catch(function(err){
-    console.error(err.message);
 })
 
 app.use(session({
@@ -77,38 +72,41 @@ app.get('/',(req,res)=>{
                 }
             })
 
-            Posts.find({}).sort({'_id': -1}).limit(3).exec(function(err,ultimas){
-                ultimas = ultimas.map(function(val){
-                    return {
-                        titulo: val.titulo,
-                        image: val.image,
-                        conteudo: val.conteudo,
-                        conteudoCurto: val.conteudo.substr(0,100),
-                        slug: val.slug,
-                        categoria: val.categoria,
-                    }
-                })
+        Posts.find({}).sort({'_id': -1}).limit(3).exec(function(err,ultimas){
+            ultimas = ultimas.map(function(val){
+                return {
+                    titulo: val.titulo,
+                    image: val.image,
+                    conteudo: val.conteudo,
+                    conteudoCurto: val.conteudo.substr(0,100),
+                    slug: val.slug,
+                    categoria: val.categoria,
+                }
+            })
 
-            Noticias.find({}).sort({'_id': -1}).limit(6).exec(function(err,noticias){
-                noticias = noticias.map(function(val){
-                    return {
-                        titulo: val.titulo,
-                        image: val.image,
-                        conteudo: val.conteudo,
-                        conteudoCurto: val.conteudo.substr(0,100),
-                        slug: val.slug,
-                        categoria: val.categoria,
-                    }
-                })
+        Noticias.find({}).sort({'_id': -1}).limit(6).exec(function(err,noticias){
+            noticias = noticias.map(function(val){
+                return {
+                    titulo: val.titulo,
+                    image: val.image,
+                    conteudo: val.conteudo,
+                    conteudoCurto: val.conteudo.substr(0,100),
+                    slug: val.slug,
+                    categoria: val.categoria,
+                }
+            })
 
-            res.render('home', {posts:posts,destaques:destaques,ultimas:ultimas,noticias:noticias})
+        Horarios.find({}).sort({'_id': 1}).exec(function(err,horarios){
+            horarios = horarios.map(function(val){
+                return {
+                    titulo: val.titulo,
+                    horario: val.horario,
+                }
+            })
 
-        })
-
-        })
-
-        })
-        })
+        res.render('home', {posts:posts,destaques:destaques,ultimas:ultimas,noticias:noticias,horarios:horarios})
+        
+        })})})})})
     }else{
 
         Posts.find({titulo: {$regex: req.query.busca,$options:"i"}},function(err,posts){
@@ -130,40 +128,35 @@ app.get('/',(req,res)=>{
 });
 
 app.get('/postagens',(req,res)=>{
-    
-    if(req.query.busca == null){
-        Posts.find({}).sort({'_id': -1}).exec(function(err,posts){
-            posts = posts.map(function(val){
-                return {
-                    titulo: val.titulo,
-                    image: val.image,
-                    conteudo: val.conteudo,
-                    conteudoCurto: val.conteudo.substr(0,100),
-                    slug: val.slug,
-                    categoria: val.categoria,
-                }
-            })
-            res.render('postagens',{posts:posts});
+    Posts.find({}).sort({'_id': -1}).exec(function(err,posts){
+        posts = posts.map(function(val){
+            return {
+                titulo: val.titulo,
+                image: val.image,
+                conteudo: val.conteudo,
+                conteudoCurto: val.conteudo.substr(0,100),
+                slug: val.slug,
+                categoria: val.categoria,
+            }
         })
-}});
+        res.render('postagens',{posts:posts});
+})});
 
 app.get('/noticias',(req,res)=>{
     
-    if(req.query.busca == null){
-        Noticias.find({}).sort({'_id': -1}).limit(6).exec(function(err,noticias){
-            noticias = noticias.map(function(val){
-                return {
-                    titulo: val.titulo,
-                    image: val.image,
-                    conteudo: val.conteudo,
-                    conteudoCurto: val.conteudo.substr(0,100),
-                    slug: val.slug,
-                    categoria: val.categoria,
-                }
-            })
-            res.render('noticias',{noticias:noticias});
+    Noticias.find({}).sort({'_id': -1}).exec(function(err,noticias){
+        noticias = noticias.map(function(val){
+            return {
+                titulo: val.titulo,
+                image: val.image,
+                conteudo: val.conteudo,
+                conteudoCurto: val.conteudo.substr(0,100),
+                slug: val.slug,
+                categoria: val.categoria,
+            }
         })
-}});
+        res.render('noticias',{noticias:noticias});
+})});
 
 app.get('/contribua',(req,res)=>{
     res.render('contribua',{});
@@ -181,7 +174,7 @@ app.get('/estudos',(req,res)=>{
                 image: val.image,
                 conteudo: val.conteudo,
                 conteudoCurto: val.conteudo.substr(0,100),
-                slug: val.slug,
+                url: val.url,
                 categoria: val.categoria,
             }
         })
@@ -196,8 +189,8 @@ app.get('/faleconosco',(req,res)=>{
 
 var usuarios = [
     {
-        email: 'Admin@hotmail.com',
-        password: 'gJHaNhSGnj32vYwy'
+        email: process.env.user,
+        password: process.env.secret
     }
 ]
 
@@ -388,7 +381,7 @@ app.post('/admin/estudo',upload.single("image_estudo"), (req,res)=>{
         image:req.file.filename,
         categoria:req.body.categoria_estudo,
         conteudo:req.body.conteudo_estudo,
-        slug:req.body.slug_estudo,
+        url:req.body.url_estudo,
     })
     res.redirect('/admin')
 })
@@ -414,7 +407,7 @@ app.post('/admin/estudo/atualizar/:id',upload.single("image_estudo"), async (req
             image:req.file.filename,
             categoria:req.body.categoria_estudo,
             conteudo:req.body.conteudo_estudo,
-            slug:req.body.slug_estudo
+            url:req.body.url_estudo
         };
         const options = {new:true} ;
         const result = await Estudos.findByIdAndUpdate(id,updates, options);
@@ -477,6 +470,6 @@ app.get('/:slug',(req,res)=>{
 
 })
 
-app.listen(3000,()=>{
+app.listen(5000,()=>{
     console.log('server rodando!');
 })

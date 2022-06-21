@@ -5,7 +5,7 @@
                 <div class="mais-lidas-noticias">
                     <% for(let i = 0; i < ultimas.length; i++) { %>
                     <div class="veja-mais-single">
-                        <img src="http://localhost:5000/public/images/<%= ultimas[i].image %>" />
+                        <img src="../public/images/<%= ultimas[i].image %>" />
                         <div class="texto-mais-lida-single">
                             <h4><%= ultimas[i].titulo %></h4>
                             <p><%- ultimas[i].conteudoCurto %>...</p>

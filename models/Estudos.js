@@ -6,7 +6,7 @@ var estudosSchema = new Schema({
     image:String,
     categoria:String,
     conteudo:String,
-    slug:String
+    url:String
 },{collection:'estudos'})
 
 var Estudos = mongoose.model('Estudos',estudosSchema)
