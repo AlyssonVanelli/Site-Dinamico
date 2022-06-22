@@ -1,22 +1,22 @@
 <%- include('partials/header.html') %>
 
-    <section class="outras-noticias">
-        <div class="title-outras-noticia">
-                <div class="completas">
-                    <% for (let i = 0; i < estudos.length; i++) { %>
-                    <div class="estudo">
-                        <img src="../public/images/<%= estudos[i].image %>" />
-                        <div class="conteudo-estudo">
-                            <h2><%= estudos[i].titulo %></h2>
-                            <p><%- estudos[i].categoria %></p>
-                            <p><%- estudos[i].conteudoCurto %>...</p>
-                            <a href="<%= estudos[i].url %>" target="_blank">Assistir...</a>
-                        </div>
+<section class="outras-noticias">
+    <div class="title-outras-noticia">
+            <div class="completas">
+                <% for (let i = 0; i < estudos.length; i++) { %>
+                <div class="box-ultima-completas">
+                    <img src="../public/images/<%= estudos[i].image %>" />
+                    <div class="conteudo-estudo">
+                        <h2><%= estudos[i].titulo %></h2>
+                        <p><%- estudos[i].categoria %></p>
+                        <p><%- estudos[i].conteudoCurto %>...</p>
+                        <a href="<%= estudos[i].url %>" target="_blank">Assistir...</a>
                     </div>
-                    <% } %>
                 </div>
+                <% } %>
             </div>
         </div>
-    </section>
+    </div>
+</section>
 
 <%- include('partials/footer.html') %>

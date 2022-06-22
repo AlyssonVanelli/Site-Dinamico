@@ -189,8 +189,8 @@ app.get('/faleconosco',(req,res)=>{
 
 var usuarios = [
     {
-        email: process.env.user,
-        password: process.env.secret
+        email: 'Admin@hotmail.com',
+        password: 'gJHaNhSGnj32vYwy'
     }
 ]
 
