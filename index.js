@@ -30,7 +30,7 @@ const upload = multer({
 
 app.use(session({
     secret: 't8027ut802wyut82wuy',
-    cookie: {maxAge: 60000}
+    cookie: {maxAge: 3600000}
 }))
 
 app.use(bodyParser.json({ type: 'application/*+json' }))
