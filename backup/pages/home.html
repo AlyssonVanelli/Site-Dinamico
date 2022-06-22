@@ -49,16 +49,16 @@
                 <div class="ultimas">
                     <h2>POSTAGENS</h2>
                     <% for (let i = 0; i < posts.length; i++) { %>
-                        <div class="box-ultima-single">
-                            <img src="../public/images/<%= posts[i].image %>" />
-                            <div class="conteudo-noticia-single">
-                                <h2><%= posts[i].titulo %></h2>
-                                <p>Categoria: <%= posts[i].categoria %></p>
-                                <p><%- posts[i].conteudoCurto %>...</p>
-                                <a href="<%= posts[i].slug %>">Continue Lendo...</a>
-                            </div>
+                    <div class="box-ultima-single">
+                        <img src="../public/images/<%= posts[i].image %>" />
+                        <div class="conteudo-noticia-single">
+                            <h2><%= posts[i].titulo %></h2>
+                            <p>Categoria: <%= posts[i].categoria %></p>
+                            <p><%- posts[i].conteudoCurto %>...</p>
+                            <a href="<%= posts[i].slug %>">Continue Lendo...</a>
                         </div>
-                        <% } %>
+                    </div>
+                    <% } %>
                     <div class="vejamaisbutton">
                         <a href="/postagens">Veja Mais</a>
                     </div>

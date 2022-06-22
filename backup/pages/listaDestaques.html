@@ -1,0 +1,19 @@
+<section class="">
+    <div class="">
+        <div class=''>
+            <div style="width:100%;" class="">
+                <div class="">
+                    <% for(let i = 0; i < destaques.length; i++) { %>
+                    <div class="">
+                        <div style="display:flex;" class="">
+                            <p>Titulo: <%= destaques[i].titulo %></p>
+                            <a style="margin-left: 20px" href="/admin/destaque/<%= destaques[i].id %>">Editar</a>
+                            <a style="margin-left: 20px" href="/admin/deletar/destaques/<%= destaques[i].id %>">(x)</a>
+                        </div>
+                    </div>
+                    <% } %>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
