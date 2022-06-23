@@ -55,8 +55,8 @@
                                 <h2><%= posts[i].titulo %></h2>
                                 <p>Categoria: <%= posts[i].categoria %></p>
                                 <p><%- posts[i].conteudoCurto %>...</p>
-                                <a href="<%= posts[i].slug %>">Continue Lendo...</a>
                             </div>
+                            <a href="<%= posts[i].slug %>">Continue Lendo...</a>
                         </div>
                         <% } %>
                     <div class="vejamaisbutton">
@@ -70,8 +70,8 @@
                             <h2><%= noticias[i].titulo %></h2>
                             <p>Categoria: <%= noticias[i].categoria %></p>
                             <p><%- noticias[i].conteudoCurto %></p>
-                            <a href="<%= noticias[i].slug %>">Continue Lendo...</a>
                         </div>
+                        <a href="<%= noticias[i].slug %>">Continue Lendo...</a>
                     </div>
                     <% } %>
                     <div class="vejamaisbutton">
@@ -84,6 +84,29 @@
 
 <%- include('partials/footer.html') %>
 
+<script>
+        jQuery(function($) {
+
+          let positionInitialInfo = $('.informacoes').offset().top;
+          let widthInfo = $('.informacoes').width();
+
+          $('.informacoes').css('width', widthInfo);
+
+            $(window).scroll(function(){
+
+                   if($(window).scrollTop() > positionInitialInfo){
+                     $('.informacoes').css({'position': 'fixed', 'top': '1px'})
+                     $('.ultimas').css('margin-left', widthInfo);
+                   }
+              else{
+                 $('.informacoes').css({'position': 'relative', 'top': 'auto' })
+                     $('.ultimas').css('margin-left', 0);
+              }
+            });
+        });
+</script>
+
     </body>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 </html>
