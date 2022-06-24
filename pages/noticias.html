@@ -10,8 +10,8 @@
                         <h2><%= noticias[i].titulo %></h2>
                         <p>Categoria: <%= noticias[i].categoria %></p>
                         <p><%- noticias[i].conteudoCurto %></p>
-                        <a href="<%= noticias[i].slug %>">Continue Lendo...</a>
                     </div>
+                    <a href="/noticia/<%= noticias[i].slug %>">Continue Lendo...</a>
                 </div>
                 <% } %>
             </div>

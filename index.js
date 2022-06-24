@@ -441,7 +441,7 @@ app.get('/admin/deletar/estudos/:id', (req, res)=>{
     })
 })
 
-app.get('/:slug',(req,res)=>{
+app.get('/post/:slug',(req,res)=>{
     Posts.findOneAndUpdate({slug: req.params.slug},{new:true},function(err,resposta){
 
         if(resposta != null){
@@ -468,6 +468,34 @@ app.get('/:slug',(req,res)=>{
 
     })
 
+})
+
+app.get('/noticia/:slug', (req, res) => {
+    Noticias.findOneAndUpdate({slug: req.params.slug},{new:true},function(err,noticia){
+
+        if(noticia != null){
+
+            Posts.find({}).sort({'_id': -1}).limit(3).exec(function(err,ultimas){
+                ultimas = ultimas.map(function(val){
+                    return {
+                        titulo: val.titulo,
+                        image: val.image,
+                        conteudo: val.conteudo,
+                        conteudoCurto: val.conteudo.substr(0,100),
+                        slug: val.slug,
+                        categoria: val.categoria,
+                    }
+                })
+            
+                res.render('singleNoticia',{noticia:noticia,ultimas:ultimas});
+        
+            })
+
+        }else{
+            res.redirect('/')
+        }
+
+    })
 })
 
 app.listen(5000,()=>{

@@ -50,15 +50,16 @@ body{
   min-height: calc(80vh - 120px);
 }
 
-/* Destaques */
-
 .center{
   max-width: 100%;
   margin:0 auto;
   padding:0 2%;
   display: flex;
   flex-wrap: wrap;
+  align-items: start;
 }
+
+/* Destaques */
 
 .noticia-destaque{
 padding: 0px;
@@ -120,6 +121,8 @@ padding: 0px;
   width:25%;
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
+  position:-webkit-sticky;
+  position: sticky;top: 0;
 }
 
 .informacoes > h1{
@@ -270,6 +273,7 @@ color: black;
   margin: 0;
   padding: 20px;
   margin-top: 50px;
+  height: 150px;
 }
 
 #social-container ul,
@@ -538,6 +542,7 @@ color: black;
 }
 
 /* Notice */
+
 
 .movie-details {
   margin: 25px 0;

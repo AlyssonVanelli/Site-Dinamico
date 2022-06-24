@@ -10,7 +10,7 @@
                         <h2><%= posts[i].titulo %></h2>
                         <p>Categoria: <%= posts[i].categoria %></p>
                         <p><%- posts[i].conteudoCurto %></p>
-                        <a href="<%= posts[i].slug %>">Continue Lendo...</a>
+                        <a href="/post/<%= posts[i].slug %>">Continue Lendo...</a>
                     </div>
                 </div>
                 <% } %>
